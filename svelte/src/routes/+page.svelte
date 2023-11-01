@@ -36,7 +36,7 @@
 
     .slider {
         position: absolute;
-        top: 90%;
+        top: 60%;
         width: 80%; /* Adjust width to your preference */
         left: 10%; /* Center the slider */
     }
