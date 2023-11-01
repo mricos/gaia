@@ -1,0 +1,31 @@
+/* Enumerate the 16 colors */
+:root {
+  --brown-1: #fec;
+  --brown-2: #fdb;
+  --brown-3: #fca;
+  --brown-4: #eb9;
+  --brown-5: #da8;
+  --brown-6: #c97;
+  --brown-7: #b86;
+  --brown-8: #a75;
+  --brown-9: #964;
+  --brown-10: #853;
+  --brown-11: #742;
+  --brown-12: #631;
+  --brown-13: #530;
+  --brown-14: #420;
+  --brown-15: #310;
+  --brown-16: #210;
+ --title-color: var(--brown-8); /* Default color for title */
+}
+body {
+  background-color: var(--brown-14);
+  color: var(--brown-2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Centering content vertically */
+  height: 100vh;
+  margin: 0;
+  overflow: hidden; /* Hide scrollbar if content overflows */
+}
