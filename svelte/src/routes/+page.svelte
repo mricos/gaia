@@ -8,10 +8,10 @@
 
 <style>
     h1 {
-        color: var(--brown-8); /* This will be overridden by the style applied in the script */
+        color: var(--brown-8);
         text-align: center;
         position: absolute;
-        top: 5%;
+        top: .125em;
         width: 100%;
     }
 
@@ -20,7 +20,7 @@
         margin-top: 20px;
         color: var(--brown-4);
         position: absolute;
-        top: 15%;
+        top: 3em;
         width: 100%;
     }
 
