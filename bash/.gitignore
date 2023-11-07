@@ -1,0 +1,7 @@
+old
+*.html
+html/*.html
+*.log
+debug.txt
+__pycache__
+.ipynb_checkpoints
