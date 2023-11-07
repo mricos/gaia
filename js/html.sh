@@ -283,3 +283,26 @@ gaia-html-make-components(){
       echo "wrote to: html/${basename%.*}.html" >> $GAIA_DIR/gaia.log
    done 
 }
+
+gaia-html-about(){
+cat <<EOF
+
+## To make webpage:
+
+1. Set bash variable GAIA_VERSION
+2. gaia-html-make-components   # takes ./components -> ./html
+3. gaia-html-make-all > \$GAIA_VERSION.html 
+
+
+## Client code
+- ScrollControl: non-visual class for watching DOM scroll and updates via
+simple publish-subrcibe method.
+
+- ChapterIndicatorComponent web component: set by ScrollControl, uses slotted 
+templates for chapter headings.
+
+- NavComponent: web component for simple navigation bar used in the footer.
+- ChapterComponent: web component with slots for <section-component>.
+- SectionComponent: web component with slots for <p>.
+EOF
+}

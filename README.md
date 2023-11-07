@@ -1,10 +1,16 @@
 # Gaia
 
-Exploring information storage, retrival  and presentation.
+Exploring information storage, retrival and presentation.
+
+- android: native app used to view one chapter+prompt
+- assets: raw text and some images for docs
+- bash: linux tools used to parse raw.txt
+- js: creates vanilla JS components for simple UI
+- svelte: proper web app browser of entire documet
 
 ## Gaia-NLP
 
-Shows examples of 
+Shows examples of
 [PCA](https://en.wikipedia.org/wiki/Principal_component_analysis),
 [SVD](https://en.wikipedia.org/wiki/Singular_value_decomposition),
 [LDA](https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation),
