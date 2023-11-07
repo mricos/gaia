@@ -3,20 +3,13 @@
 # HTML Formatting
 # This function creates the entire HTML page.
 ###################################################################
-
-#  https://unix.stackexchange.com/a/24955
-gaia-html-watch-components(){
-  while inotifywait -e close_write ./components;\
-  do gaia-html-update-style; done
-}
-
-gaia-html-update-style(){
-  echo "Building version: $GAIA_VERSION"
-  gaia-html-make-components
-  gaia-html-make-head
-  gaia-html-make-header
-  gaia-html-make-footer
-  gaia-html-cat-all > "./$GAIA_VERSION.html"
+gaia-html-check-env(){
+  cat <<EOF
+  Must set:
+    GAIA_VERSION=$GAIA_VERSION
+    GAIA_HTML=$GAIA_HTML
+    GAIA_COMPONENTS=$GAIA_COMPONENTS
+EOF
 }
 
 gaia-html-make-all(){
@@ -41,23 +34,6 @@ gaia-html-cat-all(){
   cat "$dir/footer.html"
 }
 
-#  take an integer and returns the string at index 
-#  modulo len(colors)
-gaia-html-get-color(){
-  local colors=(orange red)
-  local  ci=$(($1 % ${#colors[@]}))
-  local color=${colors[$ci]}
-  echo $color;
-}
-
-# create array of two class names. $1 would typically 
-# be set by an outer loop over the sentences.
-gaia-html-get-alternating-sentence-class(){
-  local classes=("sentence" "sentence-alt")
-  local  i=$(($1 % ${#classes[@]}))
-  local class=${classes[$i]}
-  echo $class;
-}
 
 # Document Schema
 #
@@ -72,9 +48,8 @@ gaia-html-get-alternating-sentence-class(){
 # First line is chapter title
 # Each line thereafter is either a paragraph or a prompt.
 gaia-html-make-chapter(){
-  local chapterLines=$(gaia-get-chapter-lines $1)
-  echo "$chapterLines" > debug.txt
-  #readarray lineArray <<<  $chapterLines
+  local chapterLines=$(gaia_get_chapter_lines $1)
+  #following same as: readarray lineArray <<<  $chapterLines
   lineArray=()
   while IFS=$'\n' read -r line; do
     lineArray+=("$line")
@@ -100,7 +75,7 @@ gaia-html-make-chapter(){
 
       printf "\n\n<p id='c$1-par$i'>"
       ((paragraphIndex++))
-      sentLines="$(gaia-str-to-sentences "$curLine")"
+      sentLines="$(gaia_str_to_sentences "$curLine")"
       #readarray sentArray <<< $sentLines
       sentArray=()
       while IFS=$'\n' read line; do
@@ -125,6 +100,25 @@ gaia-html-make-chapter(){
   echo "</section>"
 }
 
+#  take an integer and returns the string at index 
+#  modulo len(colors)
+gaia-html-get-color(){
+  local colors=(orange red)
+  local  ci=$(($1 % ${#colors[@]}))
+  local color=${colors[$ci]}
+  echo $color;
+}
+
+# create array of two class names. $1 would typically 
+# be set by an outer loop over the sentences.
+gaia-html-get-alternating-sentence-class(){
+  local classes=("sentence" "sentence-alt")
+  local  i=$(($1 % ${#classes[@]}))
+  local class=${classes[$i]}
+  echo $class;
+}
+
+
 gaia-html-make-prompt(){
   printf "\n<h3 id='$2'>\n$1\n</h3>"
   #printf "\n<h3 id='$2'>\n$(echo $1 | fmt -65)\n</h3>"
@@ -143,9 +137,7 @@ gaia-html-make-span(){
 # export local JOYSTICK_HTML=$(cat $GAIA_HTML/joystick.html)
 gaia-html-make-head() {
   local file="$GAIA_HTML/head.html"
-  cat "$GAIA_COMPONENTS/head.env" | envsubst > $file 
-
-
+  cat "$GAIA_COMPONENTS/head.env" | envsubst > $file
   echo "<style>" >> $file
   cat $GAIA_COMPONENTS/style.css >> $file
   cat $GAIA_COMPONENTS/modal.css >> $file
@@ -161,6 +153,7 @@ gaia-html-make-header(){
   local file="$GAIA_HTML/header.html"
   $GAIA_COMPONENTS/header.sh  > $file 
 }
+
 
 gaia-html-make-body(){
   local bodyfile="$GAIA_HTML/body.html"
@@ -197,6 +190,7 @@ alt="zen-circle">
 EOF
 }
 
+
 # Assumes title string is "C3: Third chapter title"
 # Grab the chapter number and the title text with awk.
 gaia-html-make-chapter-title(){
@@ -212,7 +206,7 @@ echo "<chapter-indicator>"
   for c in  $(seq 1 11)
     do
       
-        local chapterLines=$(gaia-get-chapter-lines $1)
+        local chapterLines=$(gaia_get_chapter_lines $1)
         #readarray lineArray <<<  $chapterLines
 
         lineArray=()
@@ -282,6 +276,22 @@ gaia-html-make-components(){
       cat $component | envsubst > "html/${basename%.*}.html"
       echo "wrote to: html/${basename%.*}.html" >> $GAIA_DIR/gaia.log
    done 
+}
+
+# Experimental
+_gaia-html-update-style(){
+  echo "Building version: $GAIA_VERSION"
+  gaia-html-make-components
+  gaia-html-make-head
+  gaia-html-make-header
+  gaia-html-make-footer
+  gaia-html-cat-all > "./$GAIA_VERSION.html"
+}
+
+#  https://unix.stackexchange.com/a/24955
+_gaia-html-watch-components(){
+  while inotifywait -e close_write ./components;\
+  do gaia-html-update-style; done
 }
 
 gaia-html-about(){
