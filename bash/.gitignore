@@ -5,3 +5,6 @@ html/*.html
 debug.txt
 __pycache__
 .ipynb_checkpoints
+clean.index
+clean.txt
+raw.txt
