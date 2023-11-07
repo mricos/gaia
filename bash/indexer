@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Initialize variables
+cnt=1
+index=()
+
+# Read from stdin
+while IFS= read -r line; do
+  # Check for chapter start
+  if [[ $line =~ C[0-9]+: ]]; then
+    index+=("$cnt chapterStart ${line:0:55}")
+  fi
+
+  # Check for prompt start
+  if [[ $line =~ P.+: ]]; then
+    index+=("$cnt promptStart ${line:0:55}")
+  fi
+
+  # Increment the counter
+  ((cnt++))
+done < "${1:-/dev/stdin}"
+
+# Add the end of the document to the index
+index+=("$cnt documentEnd ${line:0:55}")
+
+# Print the index
+for x in "${index[@]}"; do
+  echo "$x"
+done
