@@ -274,7 +274,6 @@ gaia-html-make-components(){
    do
       local basename=$(basename $component)
       cat $component | envsubst > "html/${basename%.*}.html"
-      echo "wrote to: html/${basename%.*}.html" >> $GAIA_DIR/gaia.log
    done 
 }
 
