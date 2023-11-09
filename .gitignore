@@ -1,3 +1,5 @@
+bash/svg/*.svg
+spacy.json
 book.json
 node_modules
 
