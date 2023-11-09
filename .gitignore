@@ -1,3 +1,4 @@
+*.wav
 bash/svg/*.svg
 spacy.json
 book.json
