@@ -1,3 +1,5 @@
+clean.index
+clean.txt
 *.wav
 bash/svg/*.svg
 spacy.json
