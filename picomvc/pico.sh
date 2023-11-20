@@ -16,27 +16,48 @@ pico_generate_header() {
 <title>PicoMVC</title>
 <link rel="stylesheet" href="./css/pico.min.css">
 <link rel="stylesheet" href="./css/global.css">
-<script src="./js/script.js"></script> <!-- Changed darkmode.js to script.js -->
+<script src="./js/script.js"></script>
 </head>
 EOF
 }
 
 # Function to generate content
 pico_generate_content() {
+    local main="$(pico_generate_main)"
     cat <<EOF
     <main class="container">
+    $main
+    </main>
+EOF
+}
+pico_generate_main(){
+    cat <<EOF
         <div class="top-section">
-            <h4>Configure, run and monitor jobs at scale from AI assisted Jupyter notebooks. See Nodeholder Notes to learn more.</h4>
+            <h4>Configure, run and monitor jobs at scale from AI assisted
+            Jupyter notebooks. See<a href="https://notes.nodeholder.com">
+            Nodeholder Notes</a> to learn more.</h4>
         </div>
         <div class="middle-section">
-            <!-- Button to toggle between light and dark mode -->
-            <button class="button-primary" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+            <button
+                class="button-primary"
+                onclick="toggleDarkMode()"
+            >
+                Toggle Dark Mode
+            </button>
         </div>
+
         <div class="bottom-section">
             <p>Bottom</p>
         </div>
-    </main>
 EOF
+}
+
+pico_generate_components(){
+   for component in $(ls -1 components/*.env)                                   
+   do                                                                           
+      local basename=$(basename $component)                                     
+      cat $component | envsubst
+   done                                                                         
 }
 
 # Function to generate footer
