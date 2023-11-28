@@ -1,4 +1,4 @@
-# Gaia
+# Knowing Gaia
 
 Exploring information storage, retrival and presentation.
 
@@ -6,7 +6,7 @@ Exploring information storage, retrival and presentation.
 - assets: raw text and some images for docs
 - bash: linux tools used to parse raw.txt
 - js: creates vanilla JS components for simple UI
-- svelte: proper web app browser of entire documet
+- svelte: proper web app browser of entire document
 
 ## Gaia-NLP
 
