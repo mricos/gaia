@@ -1,5 +1,5 @@
-# PicoMVC
-based on [Pico 1.5.10](https://github.com/picocss/pico), PicoPVC provides
+# Pico
+based on [Pico 1.5.10](https://github.com/picocss/pico), Pico provides
 a Model-View-Controller scheme for building HTML with CSS and JS using 
 Bash environment variable substitution.
 
