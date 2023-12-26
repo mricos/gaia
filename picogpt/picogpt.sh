@@ -92,6 +92,49 @@ document.addEventListener('DOMContentLoaded', () => {
 EOF
 }
 
+createModelJs() {
+    cat > "js/pico/model.js" <<'EOF'
+class PicoModel {
+    constructor() {
+        this.data = { counter: 0 };
+        this.listeners = { counter: [] };
+    }
+    subscribe(property, listener) {
+        this.listeners[property].push(listener);
+    }
+    notify(property) {
+        this.listeners[property].forEach(listener => listener(this.data[property]));
+    }
+    setCounter(value) {
+        this.data.counter = value;
+        this.notify('counter');
+    }
+    incrementCounter() {
+        this.setCounter(this.data.counter + 1);
+    }
+    decrementCounter() {
+        this.setCounter(this.data.counter - 1);
+    }
+}
+EOF
+}
+
+createControllerJs() {
+    cat > "js/pico/controller.js" <<'EOF'
+class Controller {
+    constructor(model) {
+        this.model = model;
+    }
+    incrementCounter() {
+        this.model.incrementCounter();
+    }
+    decrementCounter() {
+        this.model.decrementCounter();
+    }
+}
+EOF
+}
+
 createIndexHtml() {
     cat > "./index.html" <<'EOF'
 <!DOCTYPE html>
