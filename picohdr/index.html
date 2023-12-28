@@ -11,31 +11,31 @@
 </head>
 <body>
     <header>
-
-
-    <nav id="navbar">
-        <button class="hamburger">&#9776;</button>
-        <ul>
-            <li><strong>PicoUI</strong></li>
-        </ul>
-        <ul>
-            <li><a href="#"
-                data-mode="input" class="outline .secondary">Input</a></li>
-            <li><a href="#"
-                data-mode="output" class="outline">Output</a></li>
-            <li><a href="#"
-                data-mode="settings" class="outline">Settings</a></li>
-        </ul>
-    </nav>
-</header>
-
-
-    <main >
-        <div   id="mode-display" style="text-align: center;"></div>
+        <nav id="navbar">
+            <button class="hamburger">&#9776;</button>
+            <ul>
+                <li><strong>PicoUI</strong></li>
+            </ul>
+            <ul>
+                <li><a href="#"
+                    data-mode="input" class="outline .secondary">Input</a></li>
+                <li><a href="#"
+                    data-mode="output" class="outline">Output</a></li>
+                <li><a href="#"
+                    data-mode="settings" class="outline">Settings</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main id="main">
+        <div id="default"></div>
+        <div id="input"></div>
+        <div id="output"></div>
+        <div id="settings"></div>
     </main>
-    <footer>
+    <footer id="footer">
         <!-- Footer Content -->
     </footer>
+    <script src="./components.js"></script>
     <script src="./app.js"></script>
 </body>
 </html>
