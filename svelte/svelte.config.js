@@ -1,13 +1,28 @@
-import adapter from '@sveltejs/adapter-auto';
+import adapter from '@sveltejs/adapter-auto'; // Or any other adapter you're using
+import preprocess from 'svelte-preprocess';
+import path from 'path';
 
-/** @type {import('@sveltejs/kit').Config} */
+
 const config = {
-	kit: {
-		// adapter-auto only supports some environments, see https://kit.svelte.dev/docs/adapter-auto for a list.
-		// If your environment is not supported or you settled on a specific environment, switch out the adapter.
-		// See https://kit.svelte.dev/docs/adapters for more information about adapters.
-		adapter: adapter()
-	}
+  kit: {
+    adapter: adapter(),
+    // Other kit options...
+  },
+  preprocess: preprocess(),
+  vite: { // Note: `vite` is at the top level, not inside `kit`
+    server:{
+      host: '0.0.0.0'
+    },
+    resolve: {
+      alias: {
+        $stores: path.resolve('./src/stores'),
+        $components: path.resolve('./src/components'),
+        
+        // Other aliases...
+      },
+    },
+    // Other Vite-specific configurations...
+  },
 };
 
 export default config;
