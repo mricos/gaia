@@ -12,4 +12,6 @@ body {
 /* Define a custom class using Tailwind's utilities */
 .debug-border {
   @apply border-2 border-red-500; /* This applies a 2px red border */
+  @apply overflow-hidden !important;
+
 }

@@ -17,6 +17,24 @@
   --brown-15: #310;
   --brown-16: #210;
  --title-color: var(--brown-8); /* Default color for title */
+}/* Define the orange color palette with fallbacks for missing shades */
+:root {
+  --orange-1: #fff4e6;
+  --orange-2: #ffe8cc;
+  --orange-3: #ffddb3; /* Fallback color for missing shade 3 */
+  --orange-4: #ffd199;
+  --orange-5: #ffc480;
+  --orange-6: #ffb866;
+  --orange-7: #ffac4d;
+  --orange-8: #ffa033;
+  --orange-9: #ff941a;
+  --orange-10: #ff8800;
+  --orange-11: #e67900;
+  --orange-12: #cc6a00;
+  --orange-13: #b35c00;
+  --orange-14: #994d00;
+  --orange-15: #804000;
+  --orange-16: #663300;
 }
 
 :root {
@@ -31,7 +49,7 @@ body {
   font-family: var(--font-base);
   font-size: var(--font-size-base);
   line-height: var(--line-height-base);
-  background-color: var(--brown-14);
+  background-color: var(--brown-1);
   color: var(--brown-2);
   display: flex;
   flex-direction: column;

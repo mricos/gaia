@@ -3,6 +3,7 @@
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
+		"prebuild": "node prebuild.js",
 		"dev": "vite dev",
 		"devd": "vite dev --inspect",
 		"preview": "vite preview",

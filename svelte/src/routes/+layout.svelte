@@ -1,31 +1,21 @@
 <script>
   import "../app.css";
   import Navbar from '../components/Navbar.svelte';
-  import Log from "../components/Log.svelte";
   import Joystick from '../components/Joystick.svelte';
+  import { appState } from '../stores/appState.js';
+  import Footer from '../components/Footer.svelte';
+	import Modal from "../components/Modal.svelte";
+  import Woodcut from "../components/Woodcut.svelte";
+  export let data;
+
+$: appState.set(data);
 </script>
-
-<main class="flex flex-col min-h-screen">
-    <header class="bg-blue-500 text-white p-4">
-        <Navbar></Navbar>
-          <!-- Additional navigation links could go here -->
-        <!-- Any other header content (like a logo or da search form) could go here -->
-      </header>
-  <article class="flex-1 overflow-auto p-4">
-
-    <slot />
-  </article>
-  <footer class="p-5 text-xs flex justify-between">
-    <div><Joystick/></div>
-    <Log></Log>
-  <style>
-    .footer-text {
-      align-self: flex-end;
-    }
-  </style>
-  </footer>
- 
-<hidden class="hidden">
-</hidden>
+<main class="overflow-hidden flex flex-col min-h-screen">
+<Navbar/>
+<slot />
+<Modal isOpen=true>
+  <pre>{JSON.stringify($appState, null, 2)}</pre>
+</Modal >
+<Joystick/>
+<Footer />
 </main>
-

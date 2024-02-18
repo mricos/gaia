@@ -11,6 +11,12 @@
             "sourceMapPathOverrides": {
                 "rollup:///src/*": "${webRoot}/*"
             }
-        }
+        },
+        {
+            "name": "Launch SvelteKit server",
+            "request": "launch",
+            "type": "node-terminal",
+            "command": "source start_server.sh"
+          }
     ]
 }

@@ -23,7 +23,6 @@
         position: absolute;
         border-radius: 10%;
         border: 2px solid #4b4141; /* Styling the border */
-        z-index:  0;
     }
 </style>
 
