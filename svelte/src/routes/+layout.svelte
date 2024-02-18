@@ -5,7 +5,6 @@
   import { appState } from '../stores/appState.js';
   import Footer from '../components/Footer.svelte';
 	import Modal from "../components/Modal.svelte";
-  import Woodcut from "../components/Woodcut.svelte";
   export let data;
 
 $: appState.set(data);
