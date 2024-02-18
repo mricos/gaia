@@ -5,6 +5,7 @@
   import { appState } from '../stores/appState.js';
   import Footer from '../components/Footer.svelte';
 	import Modal from "../components/Modal.svelte";
+	import FAB from "../components/FAB.svelte";
   export let data;
 
 $: appState.set(data);
@@ -16,5 +17,6 @@ $: appState.set(data);
   <pre>{JSON.stringify($appState, null, 2)}</pre>
 </Modal >
 <Joystick/>
+<FAB />
 <Footer />
 </main>
