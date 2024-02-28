@@ -50,6 +50,6 @@ module.exports = {
       },
     },
   },
-  // Dynamically switch the palette here by extending the theme
-  plugins: [],
+  // Dynamically switch the palette here by extending the them
+  plugins: [require("daisyui")]
 };

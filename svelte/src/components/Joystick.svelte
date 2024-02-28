@@ -1,7 +1,7 @@
 <style>
     .joystick {
         position: absolute;
-        bottom: 20%; /* Positioned 20% from the bottom */
+        bottom: 10%; /* Positioned 20% from the bottom */
         left: 50%; /* Center horizontally */
         transform: translateX(-50%); /* Adjust for centering */
         width: 25vmin; /* 1/4 of the screen's smaller dimension */

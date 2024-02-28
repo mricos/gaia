@@ -61,5 +61,6 @@
 
 <div>
   <h1>{$currentChapter}</h1>
+  
   <!-- Display chapter content here -->
 </div>

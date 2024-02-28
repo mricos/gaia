@@ -6,16 +6,17 @@
   import Footer from '../components/Footer.svelte';
 	import Modal from "../components/Modal.svelte";
 	import FAB from "../components/FAB.svelte";
-  export let data;
 
-$: appState.set(data);
+  $: appState.set({ isModalOpen: false });
+
 </script>
 <main class="overflow-hidden flex flex-col min-h-screen">
 <Navbar/>
 <slot />
-<Modal isOpen=true>
+<Modal isOpen={appState.isModalOpen===false}>
   <pre>{JSON.stringify($appState, null, 2)}</pre>
 </Modal >
+
 <Joystick/>
 <FAB />
 <Footer />

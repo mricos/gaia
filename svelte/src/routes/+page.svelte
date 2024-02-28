@@ -12,14 +12,9 @@
   let commitHash=data.props.commitHash;
   $: appState.set(data);
 
-  onMount(() => {
-    // Initialize the clientCache store with data passed from the server
-    //clientCache.set(data);
-
-  });
-
  </script>
 <ChapterReader />
+<pre>{JSON.stringify($appState, null, 2)}</pre>
 
-<pre>{JSON.stringify(data)}</pre>
+
 
