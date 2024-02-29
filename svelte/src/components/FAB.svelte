@@ -1,19 +1,19 @@
-// FAB.svelte
 <script>
 
 import { appState } from '../stores/appState.js'; // Import the appState store
 
 
 function toggleModal() {
-  $appState.isModalOpen = !$appState.isModalOpen;
+  //$appState.isModalOpen = !$appState.isModalOpen;
 }
 
 function closeModal() {
-  appState.update(state => ({ ...state, isModalOpen: false }));
+  //appState.update(state => ({ ...state, isModalOpen: false }));
 }
 
 function openModal() {
-  appState.update(state => ({ ...state, isModalOpen: open }));
+  //appState.update(state => ({ ...state, isModalOpen: open }));
+  appState.isModalOpen.set(true);
 }
 
 </script>

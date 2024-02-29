@@ -2,15 +2,16 @@
 <script>
   import { appState } from '../stores/appState.js'; // Import the appState store
 
-  export let isOpen = false;
-  $: isOpen = $appState.isModalOpen;
-
+  //export let isOpen = false;
+  //$: isOpen = $appState.isModalOpen;
+  // Initialize isOpen with the value from appState.isModalOpen
+  let isOpen = appState.isModalOpen;
+  // Subscribe to changes in appState.isModalOpen and update isOpen
+  $: isOpen = appState.$isModalOpen;
   function closeModal() {
-    //appState.set({ isModalOpen: false });
-    appState.update(currentState => {
-  return { ...currentState, isModalOpen: false };
-});
+    appState.isModalOpen.set(false); // Update isModalOpen in appState to close the modal
   }
+
 </script>
 
 
@@ -30,10 +31,10 @@
     /* Basic styling */
     .modal {
       position: fixed;
-      top: 10%;
-      left: 10%;
-      width: 80%;
-      height: 80%;
+      top: 5%;
+      left: 5%;
+      width: 90%;
+      height: 90%;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -41,17 +42,16 @@
       @apply text-palette-orange-1;
       z-index: 999;
       visibility: hidden;
-      transition: all 0.3s ease;
+      transition: all 1.5s ease;
 
     }
     .modal-content {
       padding: 20px;
       border-radius: 5px;
       border-width: 1.5px;
-      border-color: var(--orange-16);
+      border-color: var(--orange-16); 
       border-style: solid;
-      max-width: 500px;
-      width: 90%;
+      width: 95%;
     }
     .close-button {
     @apply text-palette-orange-16;
@@ -65,7 +65,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.9); /* Dim the background */
+    background: rgba(0, 0, 0, 0.8); /* Dim the background */
     z-index: 998; /* Place it below the modal */
   }
 
@@ -78,7 +78,8 @@
     /* Responsive adjustments */
     @media (max-width: 768px) {
       .modal-content {
-        width: 80%;
+        font-size:.75rem;
+        width: 90%;
       }
     }
   </style>

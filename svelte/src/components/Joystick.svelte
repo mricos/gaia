@@ -1,3 +1,175 @@
+<script>
+  import { onMount, onDestroy } from 'svelte';
+  import { xaxis, yaxis,
+    quantizedXaxis, quantizedYaxis, 
+    normalizedXaxis, normalizedYaxis } from '../stores/joystickStore.js';
+
+
+  export let initX = 0;
+  export let initY = 0;
+
+
+
+  onMount(() => {
+    initX = $xaxis;
+    initY = $yaxis;
+    setHandlePositionQuantized(initX, initY);
+    setHandlePositionQuantized(4,5);
+  });
+
+  let joystickContainer;
+  let isDragging = false;
+  export let minValue=1;
+  export let maxValue=16;
+
+
+  function handleTouchStart(event) {
+    isDragging = true;
+    // Prevent the default touch action
+    event.preventDefault();
+    // Add touch event listeners
+    joystickContainer.addEventListener('touchmove', handleTouchMove);
+    joystickContainer.addEventListener('touchend', handleTouchEnd);
+  }
+
+
+  export function handleTouchMove(event) {
+    if (joystickState.isDragging) {
+      // Get the touch position relative to the joystick
+      const rect = joystickContainer.getBoundingClientRect();
+      const touch = event.touches[0];
+      const x = touch.clientX - rect.left;
+      const y = touch.clientY - rect.top;
+      joystickState.position = { x, y };
+    }
+  }
+
+  export function handleMouseDown(event) {
+    joystickState.isDragging = true;
+    // Prevent the default mouse action
+    event.preventDefault();
+  }
+
+  // Add touch event listeners
+  onMount(() => {
+    joystickContainer.addEventListener('touchmove', handleTouchMove);
+    joystickContainer.addEventListener('touchend', handleTouchEnd);
+    joystickContainer.addEventListener('touchcancel', handleTouchEnd);
+  });
+
+  // Add mouse event listeners
+  onMount(() => {
+    joystickContainer.addEventListener('mousemove', handleMouseMove);
+    joystickContainer.addEventListener('mouseup', handleMouseUp);
+  });
+
+  // Remove touch event listeners when the component is destroyed
+  onDestroy(() => {
+    joystickContainer.removeEventListener('touchmove', handleTouchMove);
+    joystickContainer.removeEventListener('touchend', handleTouchEnd);
+    joystickContainer.removeEventListener('touchcancel', handleTouchEnd);
+  });
+
+  // Remove mouse event listeners when the component is destroyed
+  onDestroy(() => {
+    joystickContainer.removeEventListener('mousemove', handleMouseMove);
+    joystickContainer.removeEventListener('mouseup', handleMouseUp);
+  });
+
+
+
+
+
+  export const joystickState = {
+    position: { x: 0, y: 0 },
+    isDragging: false,
+    n: 16 // Default quantization value
+  };
+  
+  export function setHandlePositionQuantized(x, y) {
+    const { x: quantizedX, y: quantizedY } = quantizePosition(x, y);
+    joystickState.position = { x: quantizedX, y: quantizedY };
+  }
+
+
+  
+  export function handleTouchEnd() {
+    joystickState.isDragging = false;
+    centerJoystick();
+  }
+  
+  
+  function setHandlePosition(x, y) {
+    const handle = joystickContainer.firstChild;
+    handle.style.left = `${x}px`;
+    handle.style.top = `${y}px`;
+
+  }
+  
+  export function handleMouseMove( event) {
+    if (joystickState.isDragging) {
+      // Get the mouse position relative to the joystick
+      const rect = joystickContainer.getBoundingClientRect();
+      const x = parseFloat(event.clientX - rect.left).toFixed(2);
+      const y = parseFloat(event.clientY - rect.top).toFixed(2);
+      joystickState.position = { x, y };
+      xaxis.set(x);
+      yaxis.set(y);
+      setHandlePosition(x,y);
+    }
+  }
+  
+  export function handleMouseUp() {
+    joystickState.isDragging = false;
+    //centerJoystick()
+  }
+  
+  export function quantizePosition(x, y) {
+    const n = joystickState.n;
+    const quantizedX = Math.floor((x / n) * 100);
+    const quantizedY = Math.floor((y / n) * 100);
+    return { x: quantizedX, y: quantizedY };
+  }
+
+  
+
+
+</script>
+
+
+<div 
+  class="joystick border"
+  bind:this={joystickContainer}
+  on:mousedown={handleMouseDown}
+  on:touchstart={handleTouchStart}
+  on:touchmove={handleTouchMove}
+  on:touchend={handleTouchEnd}
+  on:touchcancel={handleTouchEnd}
+
+  role="slider" 
+  aria-valuemin={minValue} 
+  aria-valuemax={maxValue} 
+  aria-valuenow={$xaxis} 
+  aria-orientation="horizontal" 
+  tabindex="0">
+
+  <div 
+    class="joystick-handle border border-blue-500" 
+    role="slider" 
+    aria-valuemin={minValue} 
+    aria-valuemax={maxValue} 
+    aria-valuenow={$yaxis} 
+    aria-orientation="vertical" 
+    tabindex="0">
+    <!-- Display the slider values -->
+  </div>
+  <div class="border-2 border-red-400 ">
+</div>
+</div>
+
+<p>Slider Value: {$xaxis}</p>
+<p>Vertical Slider Value: {$yaxis}</p>
+
 <style>
     .joystick {
         position: absolute;
@@ -25,90 +197,3 @@
         border: 2px solid #4b4141; /* Styling the border */
     }
 </style>
-
-<script>
-    import { sliderValue, verticalSliderValue } from '../stores/sliderStore.js';
-    let joystickHandle;
-    let isDragging = false;
-    export let minValue=1;
-    export let maxValue=16;
-    function handleMouseDown(event) {
-        isDragging = true;
-        // Add global event listeners
-        window.addEventListener('mousemove', handleMouseMove);
-        window.addEventListener('mouseup', handleMouseUp);
-    }
-    function handleMouseMove(event) {
-    if (isDragging) {
-        const rect = joystickHandle.getBoundingClientRect();
-        const joystickRect = joystickHandle.parentNode.getBoundingClientRect();
-        const handleHalfWidth = rect.width / 2;
-        const handleHalfHeight = rect.height / 2;
-
-        let x = event.clientX - joystickRect.left - handleHalfWidth;
-        let y = event.clientY - joystickRect.top - handleHalfHeight;
-
-        // Ensure the handle stays within the joystick bounds
-        x = Math.max(0, Math.min(x, joystickRect.width - rect.width));
-        y = Math.max(0, Math.min(y, joystickRect.height - rect.height));
-
-        // Quantize the position
-        const quantizedX = Math.floor((x / (joystickRect.width - rect.width)) * 16);
-        const quantizedY = Math.floor((y / (joystickRect.height - rect.height)) * 16);
-
-        sliderValue.set(quantizedX);
-        verticalSliderValue.set(quantizedY);
-
-        // Update the joystick handle's style to reflect the quantized position
-        joystickHandle.style.left = `${(x / joystickRect.width) * 100}%`;
-        joystickHandle.style.top = `${(y / joystickRect.height) * 100}%`;
-    }
-}
-
-    function handleMouseUp(event) {
-        isDragging = false;
-        // Remove global event listeners
-        window.removeEventListener('mousemove', handleMouseMove);
-        window.removeEventListener('mouseup', handleMouseUp);
-    }
-
-    // Cleanup on component destruction
-    import { onDestroy } from 'svelte';
-    onDestroy(() => {
-        if (isDragging) {
-            window.removeEventListener('mousemove', handleMouseMove);
-            window.removeEventListener('mouseup', handleMouseUp);
-        }
-    });
-</script>
-
-
-
-<div 
-  class="joystick border" 
-  on:mousedown={handleMouseDown} 
-  role="slider" 
-  aria-valuemin={minValue} 
-  aria-valuemax={maxValue} 
-  aria-valuenow={$sliderValue} 
-  aria-orientation="horizontal" 
-  tabindex="0">
-
-  <div 
-    class="joystick-handle border border-blue-500" 
-    bind:this={joystickHandle} 
-    on:mousemove={handleMouseMove} 
-    role="slider" 
-    aria-valuemin={minValue} 
-    aria-valuemax={maxValue} 
-    aria-valuenow={$verticalSliderValue} 
-    aria-orientation="vertical" 
-    tabindex="0">
-    <!-- Display the slider values -->
-  </div>
-  <div class="border-2 border-red-400 ">
-</div>
-</div>
-
-<p>Slider Value: {$sliderValue}</p>
-<p>Vertical Slider Value: {$verticalSliderValue}</p>

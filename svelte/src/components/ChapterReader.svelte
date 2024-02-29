@@ -2,7 +2,7 @@
   import { onMount } from 'svelte';
   import { writable } from 'svelte/store';
   import { browser } from '$app/environment';
-  import { sliderValue } from '../stores/sliderStore.js'; // Import the store
+  import { xaxis, yaxis } from '../stores/joystickStore.js'; // Import the store
 
   // Function to save current chapter to sessionStorage
   function saveToSessionStorage(chapter) {
@@ -37,7 +37,7 @@
   let currentChapter = writable(chapters[0]); // Default to first chapter
 
   // Subscribe to sliderValue changes
-  $: $sliderValue, setCurrentChapter($sliderValue);
+  $: $xaxis, setCurrentChapter($xaxis);
 
   function setCurrentChapter(xValue) {
     // Ensure xValue is within the chapters array bounds

@@ -1,10 +1,22 @@
 <script>
-    import { appState } from '../stores/appState.js';
-  </script>
-  
-  <footer >
-    <pre>{$appState.props.commitHash}</pre>
-  </footer>
+  import { xaxis, yaxis} from '../stores/joystickStore.js';
+  import { quantizedXaxis, quantizedYaxis } from '../stores/joystickStore.js';
+  import { normalizedXaxis, normalizedYaxis } from '../stores/joystickStore.js';
+
+  $: x = xaxis;
+  $: y = yaxis;
+  $: xn = normalizedXaxis;
+  $: yn = normalizedYaxis;
+  $: xq = quantizedXaxis;
+  $: yq = quantizedYaxis;
+</script>
+
+<footer>
+  <pre>{JSON.stringify({ x: $x, y: $y })}</pre>
+  <p>Normalized Axis Values: {$xn},{$yn} </p>
+<p>Quantized X Axis Values: {$xq},{$yq}</p>
+
+</footer>
   
   <style>
     footer {
