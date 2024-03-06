@@ -1,5 +1,4 @@
-import { writable, derived } from 'svelte/store';
-
+import { writable, derived, get } from 'svelte/store';
 export let N=16;
 
 // Function to quantize a value to the nearest multiple of N
@@ -17,11 +16,11 @@ function mapQuantizedValue(value, N) {
   return value / (N - 1);
 }
 
+export const xAxisMax = writable(1);
+export const xAxisMin = writable(-1);
+export const yAxisMax = writable(1);
+export const yAxisMin = writable(-1);
 
-export let xAxisMax = 1;
-export let xAxisMin = -1;
-export let yAxisMax = 1;
-export let yAxisMin = -1;
 
 export const xaxis = writable(0);
 export const yaxis = writable(0);
@@ -32,8 +31,9 @@ export const quantizedYaxis = derived(yaxis, ($yaxis, set) => {
   set(quantizeValue($yaxis, N));
 });
 export const normalizedXaxis = derived(xaxis, ($xaxis, set) => {
-  set(mapQuantizedValue(quantizeValue($xaxis, N), N));
+  set(($xaxis - get(xAxisMin)) / (get(xAxisMax) - get(xAxisMin)));
 });
+
 export const normalizedYaxis = derived(yaxis, ($yaxis, set) => {
-  set(mapQuantizedValue(quantizeValue($yaxis, N), N));
+  set(($yaxis - get(yAxisMin)) / (get(yAxisMax) - get(yAxisMin)));
 });

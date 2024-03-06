@@ -1,26 +1,45 @@
 <script>
   import { onMount, onDestroy } from 'svelte';
-  import { xaxis, yaxis,
-    quantizedXaxis, quantizedYaxis, 
-    normalizedXaxis, normalizedYaxis } from '../stores/joystickStore.js';
+ 
+    import { xaxis, yaxis, xAxisMax, xAxisMin, yAxisMax, yAxisMin 
+    } from 
+    '../stores/joystickStore.js';
 
+
+  let joystickContainer;
+  let isDragging = false;
+  export let minValue=1;
+  export let maxValue=16;
 
   export let initX = 0;
   export let initY = 0;
-
-
 
   onMount(() => {
     initX = $xaxis;
     initY = $yaxis;
     setHandlePositionQuantized(initX, initY);
     setHandlePositionQuantized(4,5);
+    updateJoystickSize();
+    window.addEventListener('resize', updateJoystickSize);
+
   });
 
-  let joystickContainer;
-  let isDragging = false;
-  export let minValue=1;
-  export let maxValue=16;
+  onDestroy(() => {
+    // Remove the resize event listener when the component is destroyed
+    window.removeEventListener('resize', updateJoystickSize);
+  });
+
+  function updateJoystickSize() {
+    // Get the current joystick size
+    const rect = joystickContainer.getBoundingClientRect();
+
+    // Update the min and max values in the joystick store
+    xAxisMax.set(rect.width / 2);
+    xAxisMin.set(-rect.width / 2);
+    yAxisMax.set(rect.height / 2);
+    yAxisMin.set(-rect.height / 2);
+  }
+
 
 
   function handleTouchStart(event) {
@@ -163,29 +182,33 @@
     tabindex="0">
     <!-- Display the slider values -->
   </div>
-  <div class="border-2 border-red-400 ">
-</div>
+  <p>x: {$xaxis}</p>
+  <p>y: {$yaxis}</p>
+
 </div>
 
-<p>Slider Value: {$xaxis}</p>
-<p>Vertical Slider Value: {$yaxis}</p>
 
 <style>
     .joystick {
         position: absolute;
-        bottom: 10%; /* Positioned 20% from the bottom */
+        bottom: 9vh; /* Positioned at the bottom */
         left: 50%; /* Center horizontally */
         transform: translateX(-50%); /* Adjust for centering */
         width: 25vmin; /* 1/4 of the screen's smaller dimension */
         height: 25vmin; /* Make it a square */
         background-color: #eee; /* Just for visibility */
+        font-size: .75em;
+        color: #333;
         opacity: 10%;
         display: flex;
-        justify-content: center;
-        align-items: center;
+        user-select: none;
+        flex-direction: row;
+        justify-content:center;
+        align-items: flex-end;
         border-radius: 10%;
         rotate: 0deg;
         border: 2px solid #333; /* Styling the border */
+        z-index: 1000;
     }
 
     .joystick-handle {

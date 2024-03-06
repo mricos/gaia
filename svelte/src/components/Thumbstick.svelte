@@ -112,11 +112,16 @@
   
   <style>
     .thumbstick {
-      position: relative;
+      position: absolute;
       width: 100px;
       height: 100px;
       background-color: #ccc;
       border-radius: 50%;
+      bottom: 6vh; /* Positioned at the bottom */
+      left: 10vw; /* Center horizontally */
+      opacity:0.1;
+      z-index: 1000;
+      transform: translate(0%, 0%);
     }
   
     .thumb {

@@ -8,6 +8,7 @@
   import Footer from '../components/Footer.svelte';
 	import Modal from "../components/Modal.svelte";
 	import FAB from "../components/FAB.svelte";
+	import Hud from "../components/Hud.svelte";
   import { xaxis, yaxis } from '../stores/joystickStore.js';
   let initialSliderX = null;
   let initialSliderY = null;
@@ -24,19 +25,28 @@
     }
   });
 </script>
-<main class="overflow-hidden flex flex-col min-h-screen">
-<Navbar/>
+
+<main class="w-full">
+<Navbar>
+</Navbar>
 {#if initialSliderX !== null && initialSliderY !== null}
-<slot />
+<slot/>
 <Modal>
   <pre>{JSON.stringify(appState, null, 2)}</pre>
 </Modal >
-
 <Thumbstick  />
-
 <Joystick  />
 {/if}
-
+<Hud />
 <FAB />
 <Footer />
 </main>
+
+<style>
+  @media only screen and (max-width: 600px) {
+    html {
+      height: 100vh;
+      overflow: hidden;
+    }
+  }
+</style>

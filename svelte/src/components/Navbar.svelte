@@ -1,20 +1,31 @@
-<!-- Navbar.svelte -->
 <script>
-  // No script needed for basic navigation
+  import ChapterMenu from './ChapterMenu.svelte'; // Changed this line
+  import { onMount } from 'svelte';
+  import { currentChapterName } from '../stores/chapterStore.js';
+  import { showChapterMenu } from '../stores/chapterStore.js';
+
+  let chapterName = "Chapter";
+  $: chapterName = $currentChapterName;
+
+  onMount(() => {
+    currentChapterName.subscribe(value => {
+      chapterName = value || "Chapter";
+    });
+  });
 </script>
 
-<nav class="navbar bg-base-100">
-  <div class="navbar-start">
-    <a class="btn btn-ghost normal-case text-xl" href="/">MyApp</a>
+<nav class="bg-lime-900 rounded-lg flex justify-between items-center m-4">
+  <div>
+    <a class="btn btn-ghost text-xl"
+     on:click={() => showChapterMenu.set(true)}>{chapterName}
+    </a>
   </div>
-  <div class="navbar-center hidden lg:flex">
-    <ul class="menu menu-horizontal p-0">
-      <li><a href="/">Home</a></li>
-      <li><a href="/about">About</a></li>
-      <li><a href="/contact">Contact</a></li>
-    </ul>
-  </div>
-  <div class="navbar-end">
-    <a class="btn" href="/login">Login</a>
-  </div>
+
+  {#if $showChapterMenu}
+    <div class="fixed inset-0 flex items-center justify-center">
+      <ChapterMenu 
+      show={$showChapterMenu}
+      on:close={() => showChapterMenu.set(false)} />
+    </div>
+  {/if}
 </nav>

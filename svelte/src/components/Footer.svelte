@@ -13,8 +13,9 @@
 
 <footer>
   <pre>{JSON.stringify({ x: $x, y: $y })}</pre>
-  <p>Normalized Axis Values: {$xn},{$yn} </p>
-<p>Quantized X Axis Values: {$xq},{$yq}</p>
+  <p>Normalized Axis Values: {$xn.toFixed(2)},{$yn.toFixed(2)} </p>
+  <p>Quantized X Axis Values: {$xq},{$yq}</p>
+  
 
 </footer>
   
@@ -26,7 +27,7 @@
       right: 0;
       padding: 1rem;
       opacity: 0.5;
-      font-size: 0.75rem;
+      font-size: 0.6rem;
       text-align: center;
       z-index: 100;
     }
