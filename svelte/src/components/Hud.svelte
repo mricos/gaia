@@ -1,9 +1,9 @@
 <script>
+  import WebSocketComponent from './WebSocketComponent.svelte';
   import { isButtonAToggled, isButtonBToggled, isButtonCToggled } from '../stores/storeFab.js';
   import { derived } from 'svelte/store';
   import { normalizedXaxis, normalizedYaxis } from '../stores/joystickStore.js';
 
-  import { onMount } from 'svelte';
 
   let hudAPosition = { top: '10vh', left: '10vw', right: '5vw'  };
   let hudBPosition = { top: '20vh', left: 'inherit', right: '5vw' };
@@ -13,12 +13,13 @@
   const hudBVisible = derived(isButtonBToggled, ($isButtonBToggled) => $isButtonBToggled);
   const hudCVisible = derived(isButtonCToggled, ($isButtonCToggled) => $isButtonCToggled);
 
-
+//    top: `calc(50% - 50px + ${$normalizedYaxis * 100}vh)`,
 
 $: {
   hudBPosition = {
-    top: `calc(50% - 50px + ${$normalizedYaxis * 100}vh)`,
-    right: `calc(50% - 50px + ${$normalizedXaxis * 100}vw)`
+
+    top: `30vh`,
+    left: `20vw`,
   };
 }
 
@@ -30,15 +31,18 @@ $: {
 
 {#if $isButtonBToggled}
   <div class="hud" style="top: {hudBPosition.top}; 
+  top: {hudBPosition.top};
   left: {hudBPosition.left};
   right: {hudBPosition.right};
+
   width:50%; transform: translate(0%)">
   HUD B</div>
 {/if}
 
+
 {#if $isButtonCToggled}
-  <div class="hud" style="top: {hudCPosition.top}; 
-  left: {hudCPosition.left};">HUD C</div>
+  <div class="hud" style="top: {hudCPosition.top}; left: {hudCPosition.left};">HUD C</div>
+  <WebSocketComponent />
 {/if}
 
 
