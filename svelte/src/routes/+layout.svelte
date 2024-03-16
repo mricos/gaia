@@ -6,9 +6,9 @@
   import Thumbstick from '../components/Thumbstick.svelte';
   import { appState } from '../stores/appState.js';
   import Footer from '../components/Footer.svelte';
-	import Modal from "../components/Modal.svelte";
-	import FAB from "../components/FAB.svelte";
-	import Hud from "../components/Hud.svelte";
+  import Modal from "../components/Modal.svelte";
+  import FAB from "../components/FAB.svelte";
+  import Hud from "../components/Hud.svelte";
   import { xaxis, yaxis } from '../stores/joystickStore.js';
   let initialSliderX = null;
   let initialSliderY = null;
