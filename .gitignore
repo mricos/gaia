@@ -40,8 +40,6 @@ google-services.json
 # Android Profiling
 *.hprof
 old
-*.html
-html/*.html
 *.log
 debug.txt
 __pycache__
