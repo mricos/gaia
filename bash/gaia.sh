@@ -1,3 +1,4 @@
+source ./docs.sh
 gaia_reset(){
   rm clean.txt
   rm clean.index

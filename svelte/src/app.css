@@ -1,0 +1,23 @@
+@import 'daisyui/dist/full.css';
+
+@tailwind base;  
+@tailwind components;  
+@tailwind utilities;
+body {
+    @apply bg-palette-orange-16;
+    @apply text-palette-orange-4;
+
+
+  }
+  :global(body) {
+    overflow: hidden;
+  }
+
+
+
+/* Define a custom class using Tailwind's utilities */
+.debug-border {
+  @apply border-2 border-red-500; /* This applies a 2px red border */
+  @apply overflow-hidden !important;
+
+}

@@ -1,0 +1,27 @@
+/* custom.css */
+
+/* Dark scheme (Auto) */
+/* Automatically enabled if user has Dark mode enabled */
+@media only screen and (prefers-color-scheme: dark) {
+    :root {
+      --primary: #1a1a2e;
+      --secondary: #16213e;
+      --background: #0f3460;
+      --foreground: #e94560;
+      --highlight: #c44536;
+      --accent: #8338ec;
+      --text-light: #e0e0e0;
+      --text-dark: #313131;
+    }
+  }
+
+  :root {
+    --primary: #1a1a2e;
+    --secondary: #16213e;
+    --background: #0f3460;
+    --foreground: #e94560;
+    --highlight: #c44536;
+    --accent: #8338ec;
+    --text-light: #e0e0e0;
+    --text-dark: #313131;
+}
