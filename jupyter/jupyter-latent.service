@@ -1,0 +1,17 @@
+[Unit]
+Description=JupyterLab for user latent
+After=network.target
+
+[Service]
+Type=simple
+User=latent
+Group=latent
+WorkingDirectory=/home/latent/src/gaia/jupyter
+ExecStart=/home/latent/src/gaia/jupyter/entrypoint.sh
+# Optionally set Restart to ensure it restarts on failure
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+
